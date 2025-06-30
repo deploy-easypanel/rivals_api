@@ -10,4 +10,11 @@ COPY . .
 
 RUN npm run build
 
-CMD ["node", "dist/index.js"]
+# Aqui rodar os scripts
+RUN npm run setup
+RUN npm run db
+RUN npm run seed
+
+CMD ["node", "start"]
+
+EXPOSE 4141
