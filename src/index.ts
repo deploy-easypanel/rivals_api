@@ -1,13 +1,23 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import authRoutes from './routes/auth.routes';
+import authRouter from './routes/auth.route';
+import bannerRoutes from './routes/banner.route';
 
 dotenv.config();
 
 const app = express();
+const port = 4141;
+
+// Middlewares
+app.use(cors());
 app.use(express.json());
 
-app.use('/auth', authRoutes);
+// Rotas
+app.use('/auth', authRouter);
+app.use(bannerRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+// Servidor
+app.listen(port, () =>
+  console.log(`🚀 Servidor rodando em http://localhost:${port}`)
+);
