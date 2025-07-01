@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Backend do ducks rivals",
   "main": "dist/index.js",
+  "author": "Saulo Justiniano",
+  "license": "MIT",
+  "keywords": [],
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
@@ -11,9 +14,6 @@
     "seed": "ts-node scripts/seed.ts",
     "setup": "ts-node scripts/setup.ts"
   },
-  "keywords": [],
-  "author": "Saulo Justiniano",
-  "license": "MIT",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",

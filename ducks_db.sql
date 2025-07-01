@@ -15,3 +15,9 @@ CREATE TABLE IF NOT EXISTS rivals_banners (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
+CREATE TABLE rivals_chaveamento (
+  id SERIAL PRIMARY KEY,
+  dados JSONB NOT NULL,
+  atualizado_em TIMESTAMP DEFAULT NOW()
+);
+
