@@ -15,7 +15,6 @@ export const loginController = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Administrador não encontrado.' });
   }
 
-  // Aqui deveria validar a senha (com hash), mas vamos simplificar por enquanto
   if (admin.senha !== senha) {
     return res.status(401).json({ error: 'Senha incorreta.' });
   }

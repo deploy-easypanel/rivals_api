@@ -21,7 +21,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:postgres-admin@db:5432/ducks_db
-      JWT_SECRET: 2e4461950ded7d8a5be5ff8f552b3f0ef40c252c003ae375ccd49bd4281d8a79
+      JWT_SECRET: 59c976415abc0192ded7552b311600d6d1ba9a01765f027eef0d496399721782
     volumes:
       - .:/app
       - /app/node_modules
