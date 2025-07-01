@@ -18,14 +18,13 @@ services:
     ports:
       - '4141:4141'
     depends_on:
-      - db
+      - ducks_db
     environment:
-      DATABASE_URL: postgres://postgres:postgres-admin@db:5432/ducks_db
+      DATABASE_URL: postgres://postgres:postgres-admin@ducks_db:5432/ducks_db
       JWT_SECRET: 59c976415abc0192ded7552b311600d6d1ba9a01765f027eef0d496399721782
+    command: sh -c "npm run setup && npm run db && npm run seed && node dist/index.js"
     volumes:
       - .:/app
-      - /app/node_modules
-    command: sh -c "npm run setup && npm run db && npm run seed && node dist/index.js"
 
 volumes:
   pgdata:
