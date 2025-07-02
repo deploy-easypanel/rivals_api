@@ -3,16 +3,13 @@
   "version": "0.1.0",
   "description": "Backend do ducks rivals",
   "main": "dist/index.js",
-  "author": "Saulo Justiniano",
-  "license": "MIT",
-  "keywords": [],
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js -p 4141",
+    "setup": "ts-node scripts/setup.ts",
     "db": "ts-node scripts/db.ts",
-    "seed": "ts-node scripts/seed.ts",
-    "setup": "ts-node scripts/setup.ts"
+    "seed": "ts-node scripts/seed.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

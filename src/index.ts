@@ -21,5 +21,5 @@ app.use(chaveamentoRoutes);
 
 // Servidor
 app.listen(port, () =>
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`)
+  console.log(`🚀 Servidor rodando em https://api.ducksgaming.site`)
 );
