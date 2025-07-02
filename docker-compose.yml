@@ -1,26 +1,10 @@
-version: '3.8'
-
 services:
-  ducks_db:
-    image: postgres:18
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres-admin
-      POSTGRES_DB: ducks_db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
-
   ducks_api:
     build: .
     ports:
       - '4141:4141'
-    depends_on:
-      - ducks_db
     environment:
-      DATABASE_URL: postgres://postgres:postgres-admin@ducks_db:5432/ducks_db
+      DATABASE_URL: postgres://postgres:postgres-admin@easypanel.saulojustiniano.site:5433/ducks_db?sslmode=disable
       JWT_SECRET: 59c976415abc0192ded7552b311600d6d1ba9a01765f027eef0d496399721782
     command: sh -c "npm run setup && npm run db && npm run seed && node dist/index.js"
     volumes:
