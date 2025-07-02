@@ -1,5 +1,5 @@
 services:
-  ducks_api:
+  rivals_api:
     build: .
     ports:
       - '4141:4141'
