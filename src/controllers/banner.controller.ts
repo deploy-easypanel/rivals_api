@@ -7,20 +7,20 @@ export const getBanner = async (_req: Request, res: Response) => {
 };
 
 export const updateBanner = async (req: Request, res: Response) => {
-  const { title, subtitle, paragraph, colorStart, colorEnd, dataTorneio } =
+  const { title, subtitle, paragraph, color_start, color_end, data_torneio } =
     req.body;
 
   await pool.query(
     `UPDATE rivals_banners SET
-      title = $1,
-      subtitle = $2,
-      paragraph = $3,
-      color_start = $4,
-      color_end = $5,
-      data_torneio = $6,
-      updated_at = NOW()
-     WHERE id = 1`,
-    [title, subtitle, paragraph, colorStart, colorEnd, dataTorneio]
+        title = $1,
+        subtitle = $2,
+        paragraph = $3,
+        color_start = $4,
+        color_end = $5,
+        data_torneio = $6,
+        updated_at = NOW()
+       WHERE id = 1`,
+    [title, subtitle, paragraph, color_start, color_end, data_torneio]
   );
 
   res.json({ message: 'Banner atualizado com sucesso' });
