@@ -10,7 +10,6 @@ const dbName = fullUrl.split('/').pop()!;
 const adminUrl = fullUrl.replace(`/${dbName}`, '/postgres');
 
 const initDbAndRunSql = async () => {
-  // Primeiro cliente conecta ao banco padrão 'postgres' para criar DB se não existir
   const adminClient = new Client({ connectionString: adminUrl });
 
   try {
@@ -35,7 +34,6 @@ const initDbAndRunSql = async () => {
     await adminClient.end();
   }
 
-  // Agora conectar ao banco que foi criado (ou já existia) para executar o SQL
   const client = new Client({ connectionString: fullUrl });
   try {
     await client.connect();

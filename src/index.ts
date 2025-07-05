@@ -4,6 +4,7 @@ import express from 'express';
 import authRouter from './routes/auth.route';
 import bannerRoutes from './routes/banner.route';
 import chaveamentoRoutes from './routes/chaveamento.route';
+import partidaRoutes from './routes/partidas.routes';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use(bannerRoutes);
 app.use(chaveamentoRoutes);
+app.use(partidaRoutes);
 
 // Servidor
 app.listen(port, () =>

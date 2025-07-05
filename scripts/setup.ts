@@ -10,7 +10,6 @@ const existingEnv = fs.existsSync(ENV_PATH)
   : '';
 let updatedEnv = existingEnv;
 
-// Verifica se já existe JWT_SECRET
 if (existingEnv.includes('JWT_SECRET=')) {
   updatedEnv = existingEnv.replace(
     /JWT_SECRET=.*/g,

@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { getBanner, updateBanner } from '../controllers/banner.controller';
+import {
+  atualizarBanner,
+  mostrarBanner,
+} from '../controllers/banner.controller';
 
 const router = Router();
 
-router.get('/banner', getBanner);
-router.put('/banner', updateBanner);
+router.get('/banner', mostrarBanner);
+router.put('/banner', atualizarBanner);
 
 export default router;

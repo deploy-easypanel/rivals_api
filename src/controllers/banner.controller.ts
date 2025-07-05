@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import pool from '../config/db';
 
-export const getBanner = async (_req: Request, res: Response) => {
+export const mostrarBanner = async (_req: Request, res: Response) => {
   const result = await pool.query('SELECT * FROM rivals_banners LIMIT 1');
   res.json(result.rows[0]);
 };
 
-export const updateBanner = async (req: Request, res: Response) => {
+export const atualizarBanner = async (req: Request, res: Response) => {
   const { title, subtitle, paragraph, color_start, color_end, data_torneio } =
     req.body;
 

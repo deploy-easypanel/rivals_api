@@ -40,7 +40,6 @@ const seedBanner = async () => {
       );
     }
 
-    // Ajuste para garantir um id default caso não tenha
     const bannerId = banner.id || 1;
 
     await pool.query(
