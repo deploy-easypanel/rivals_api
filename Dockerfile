@@ -24,5 +24,4 @@ COPY --from=builder /app/dist ./dist
 
 EXPOSE 4141
 
-# Inicie o servidor
 CMD ["npm", "start"]
