@@ -11,12 +11,10 @@ export const mostrarPartidas = async (_req: Request, res: Response) => {
 export const adicionarPartida = async (req: Request, res: Response) => {
   const { team1, team2, date, time, link, status } = req.body;
 
-  // Validação básica
   if (!team1 || !team2 || !date || !time || !status) {
     return res.status(400).json({ error: 'Campos obrigatórios ausentes' });
   }
 
-  // Verifica se a data é válida (formato ISO 8601: YYYY-MM-DD)
   const parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
     return res
