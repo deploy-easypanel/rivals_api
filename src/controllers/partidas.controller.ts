@@ -11,13 +11,31 @@ export const mostrarPartidas = async (_req: Request, res: Response) => {
 export const adicionarPartida = async (req: Request, res: Response) => {
   const { team1, team2, date, time, link, status } = req.body;
 
-  const result = await pool.query(
-    `INSERT INTO rivals_partidas (team1, team2, date, time, link, status)
-     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [team1, team2, date, time, link, status]
-  );
+  // Validação básica
+  if (!team1 || !team2 || !date || !time || !status) {
+    return res.status(400).json({ error: 'Campos obrigatórios ausentes' });
+  }
 
-  res.status(201).json(result.rows[0]);
+  // Verifica se a data é válida (formato ISO 8601: YYYY-MM-DD)
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate.getTime())) {
+    return res
+      .status(400)
+      .json({ error: 'Data inválida. Use formato YYYY-MM-DD' });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO rivals_partidas (team1, team2, date, time, link, status)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [team1, team2, parsedDate, time, link, status]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Erro ao adicionar partida:', error);
+    res.status(500).json({ error: 'Erro interno ao adicionar partida' });
+  }
 };
 
 export const atualizarPartida = async (req: Request, res: Response) => {
