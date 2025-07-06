@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../config/db';
 
-export const carregarChaveamento = async (req: Request, res: Response) => {
+export const carregarChaveamento = async (_req: Request, res: Response) => {
   try {
     const result = await db.query(
       'SELECT dados FROM rivals_chaveamento WHERE id = 1'

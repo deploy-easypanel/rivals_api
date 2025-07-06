@@ -6,7 +6,7 @@ import {
 
 const router = Router();
 
-router.get('/banner', mostrarBanner);
-router.put('/banner', atualizarBanner);
+router.get('/', mostrarBanner);
+router.put('/', atualizarBanner);
 
 export default router;

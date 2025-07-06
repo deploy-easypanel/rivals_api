@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.get('/chaveamento', carregarChaveamento);
-router.post('/chaveamento', salvarChaveamento);
+router.get('/', carregarChaveamento);
+router.post('/', salvarChaveamento);
 
 export default router;

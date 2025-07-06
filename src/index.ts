@@ -1,25 +1,25 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import authRouter from './routes/auth.route';
-import bannerRoutes from './routes/banner.route';
-import chaveamentoRoutes from './routes/chaveamento.route';
-import partidaRoutes from './routes/partidas.routes';
+import authRoute from './routes/auth.route';
+import bannerRoute from './routes/banner.route';
+import chaveamentoRoute from './routes/chaveamento.route';
+import partidaRoute from './routes/partidas.route';
 
 dotenv.config();
 
 const app = express();
 const port = 4141;
 
-// Middlewares
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 // Rotas
-app.use('/auth', authRouter);
-app.use(bannerRoutes);
-app.use(chaveamentoRoutes);
-app.use(partidaRoutes);
+app.use('/auth', authRoute);
+app.use('/banner', bannerRoute);
+app.use('/chaveamento', chaveamentoRoute);
+app.use('/partidas', partidaRoute);
 
 // Servidor
 app.listen(port, () =>
