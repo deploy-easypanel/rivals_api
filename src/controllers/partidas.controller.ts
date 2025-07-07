@@ -2,33 +2,25 @@ import { Request, Response } from 'express';
 import pool from '../config/db';
 
 export const mostrarPartidas = async (_req: Request, res: Response) => {
-  const result = await pool.query(
-    'SELECT * FROM rivals_partidas ORDER BY date, time'
-  );
-  res.json(result.rows);
+  try {
+    const result = await pool.query(
+      'SELECT * FROM rivals_partidas ORDER BY date, time'
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Erro ao buscar partidas:', error);
+    res.status(500).json({ error: 'Erro interno ao buscar partidas' });
+  }
 };
 
 export const adicionarPartida = async (req: Request, res: Response) => {
-  const { team1, team2, date, time, link, status } = req.body;
-
-  if (!team1 || !team2 || !date || !time || !status) {
-    return res.status(400).json({ error: 'Campos obrigatórios ausentes' });
-  }
-
-  const parsedDate = new Date(date);
-  if (isNaN(parsedDate.getTime())) {
-    return res
-      .status(400)
-      .json({ error: 'Data inválida. Use formato YYYY-MM-DD' });
-  }
+  const { date, time, team1, team2, score1, score2 } = req.body;
 
   try {
     const result = await pool.query(
-      `INSERT INTO rivals_partidas (team1, team2, date, time, link, status)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [team1, team2, parsedDate, time, link, status]
+      'INSERT INTO rivals_partidas (date, time, team1, team2, score1, score2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [date, time, team1, team2, score1 || null, score2 || null]
     );
-
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Erro ao adicionar partida:', error);
@@ -38,26 +30,36 @@ export const adicionarPartida = async (req: Request, res: Response) => {
 
 export const atualizarPartida = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { team1, team2, date, time, link, status } = req.body;
+  const { date, time, team1, team2, score1, score2 } = req.body;
 
-  await pool.query(
-    `UPDATE rivals_partidas SET
-      team1 = $1,
-      team2 = $2,
-      date = $3,
-      time = $4,
-      link = $5,
-      status = $6,
-      updated_at = NOW()
-     WHERE id = $7`,
-    [team1, team2, date, time, link, status, id]
-  );
+  try {
+    const result = await pool.query(
+      'UPDATE rivals_partidas SET date = $1, time = $2, team1 = $3, team2 = $4, score1 = $5, score2 = $6 WHERE id = $7 RETURNING *',
+      [date, time, team1, team2, score1 || null, score2 || null, id]
+    );
 
-  res.json({ message: 'Partida atualizada com sucesso' });
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Erro ao atualizar partida:', error);
+    res.status(500).json({ error: 'Erro interno ao atualizar partida' });
+  }
 };
 
 export const deletarPartida = async (req: Request, res: Response) => {
   const { id } = req.params;
-  await pool.query('DELETE FROM rivals_partidas WHERE id = $1', [id]);
-  res.json({ message: 'Partida deletada com sucesso' });
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM rivals_partidas WHERE id = $1 RETURNING *',
+      [id]
+    );
+
+    res.json({
+      message: 'Partida deletada com sucesso',
+      partida: result.rows[0],
+    });
+  } catch (error) {
+    console.error('Erro ao deletar partida:', error);
+    res.status(500).json({ error: 'Erro interno ao deletar partida' });
+  }
 };
