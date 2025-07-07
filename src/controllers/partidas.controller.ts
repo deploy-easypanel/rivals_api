@@ -16,14 +16,12 @@ export const mostrarPartidas = async (_req: Request, res: Response) => {
 export const adicionarPartida = async (req: Request, res: Response) => {
   const { date, time, team1, team2, link, status } = req.body;
 
-  const parsedDate = Date.parse(date);
-
   try {
     const result = await pool.query(
       `INSERT INTO rivals_partidas (date, time, team1, team2, link, status) 
        VALUES ($1, $2, $3, $4, $5, $6) 
        RETURNING *`,
-      [parsedDate, time, team1, team2, link || null, status || 'ao vivo']
+      [date, time, team1, team2, link || null, status || 'ao vivo']
     );
 
     res.status(201).json(result.rows[0]);
