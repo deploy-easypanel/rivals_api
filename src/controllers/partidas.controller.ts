@@ -14,12 +14,14 @@ export const mostrarPartidas = async (_req: Request, res: Response) => {
 };
 
 export const adicionarPartida = async (req: Request, res: Response) => {
-  const { date, time, team1, team2, score1, score2 } = req.body;
+  const { date, time, team1, team2, link, status } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO rivals_partidas (date, time, team1, team2, score1, score2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [date, time, team1, team2, score1 || null, score2 || null]
+      `INSERT INTO rivals_partidas (date, time, team1, team2, link, status) 
+       VALUES ($1, $2, $3, $4, $5, $6) 
+       RETURNING *`,
+      [date, time, team1, team2, link || null, status || 'ao vivo']
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -30,14 +32,16 @@ export const adicionarPartida = async (req: Request, res: Response) => {
 
 export const atualizarPartida = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { date, time, team1, team2, score1, score2 } = req.body;
+  const { date, time, team1, team2, link, status } = req.body;
 
   try {
     const result = await pool.query(
-      'UPDATE rivals_partidas SET date = $1, time = $2, team1 = $3, team2 = $4, score1 = $5, score2 = $6 WHERE id = $7 RETURNING *',
-      [date, time, team1, team2, score1 || null, score2 || null, id]
+      `UPDATE rivals_partidas 
+       SET date = $1, time = $2, team1 = $3, team2 = $4, link = $5, status = $6, updated_at = NOW() 
+       WHERE id = $7 
+       RETURNING *`,
+      [date, time, team1, team2, link || null, status || 'ao vivo', id]
     );
-
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Erro ao atualizar partida:', error);
