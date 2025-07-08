@@ -74,10 +74,53 @@ const seedBanner = async () => {
   }
 };
 
+const seedTorneioInfo = async () => {
+  try {
+    const torneioPath = path.resolve(
+      __dirname,
+      '..',
+      'data',
+      'torneio_info.json'
+    );
+    const rawTorneio = await fs.readFile(torneioPath, 'utf-8');
+    const torneio = JSON.parse(rawTorneio);
+
+    const { local, horario, formato, data, equipes, regulamento } = torneio;
+
+    if (!local || !horario || !formato || !data || !equipes || !regulamento) {
+      throw new Error('Dados do torneio incompletos no JSON.');
+    }
+
+    await pool.query(
+      `
+      INSERT INTO rivals_torneio_info (
+        id, local, horario, formato, data, equipes, regulamento
+      ) VALUES (
+        1, $1, $2, $3, $4, $5, $6
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        local = EXCLUDED.local,
+        horario = EXCLUDED.horario,
+        formato = EXCLUDED.formato,
+        data = EXCLUDED.data,
+        equipes = EXCLUDED.equipes,
+        regulamento = EXCLUDED.regulamento
+      `,
+      [local, horario, formato, data, equipes, regulamento]
+    );
+
+    console.log('✅ Informações do torneio inseridas/atualizadas com sucesso.');
+  } catch (error) {
+    console.error('Erro ao fazer seed do torneio:', error);
+    throw error;
+  }
+};
+
 const seedAll = async () => {
   try {
     await seedAdmins();
     await seedBanner();
+    await seedTorneioInfo();
     console.log('🎉 Seed finalizado com sucesso!');
     process.exit(0);
   } catch (error) {
