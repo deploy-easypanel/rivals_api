@@ -5,6 +5,7 @@ import authRoute from './routes/auth.route';
 import bannerRoute from './routes/banner.route';
 import chaveamentoRoute from './routes/chaveamento.route';
 import partidaRoute from './routes/partidas.route';
+import torneioInfoRoute from './routes/torneio_info.route';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/auth', authRoute);
 app.use('/banner', bannerRoute);
 app.use('/chaveamento', chaveamentoRoute);
 app.use('/partidas', partidaRoute);
+app.use('/torneio_info', torneioInfoRoute);
 
 // Servidor
 app.listen(port, () =>
