@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
-const ENV_PATH = path.resolve(__dirname, '../.env');
+const ENV_PATH = path.resolve(__dirname, '..', '.env');
 const JWT_SECRET = randomBytes(32).toString('hex');
 
 const existingEnv = fs.existsSync(ENV_PATH)
