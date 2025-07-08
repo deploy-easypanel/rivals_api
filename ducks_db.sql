@@ -44,3 +44,14 @@ CREATE TABLE IF NOT EXISTS rivals_partidas (
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Cria tabela de torneio_info
+CREATE TABLE IF NOT EXISTS rivals_torneio_info (
+  id SERIAL PRIMARY KEY,
+  local TEXT NOT NULL,
+  horario TEXT NOT NULL,
+  formato TEXT NOT NULL,
+  data TEXT NOT NULL,
+  equipes TEXT NOT NULL,
+  regulamento TEXT NOT NULL
+);
